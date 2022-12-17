@@ -7,8 +7,8 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
-let items = ["Buy food", "Cook food"];
-let workItems =[];
+const items = ["Buy food", "Cook food"];
+const workItems =[];
 
 app.get("/", function (req, res) {
   res.render("list",{listTitle:date.getDate(), newListItems:items});
@@ -16,7 +16,7 @@ app.get("/", function (req, res) {
 
 app.post("/", function(req,res){
     
-    let item = req.body.newItem;
+    const item = req.body.newItem;
     if(req.body.list==="Work"){
     workItems.push(item);
     res.redirect("/work");
