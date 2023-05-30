@@ -29,6 +29,12 @@ const item3 = new Item({
 });
 
 const defaultItems = [item1, item2, item3];
+const listSchema = {
+  name: String,
+  items: [itemsSchema]
+};
+
+const List = mongoose.model("List", listSchema);
 
 // Item.insertMany(defaultItems);
 
@@ -62,16 +68,35 @@ app.post("/", function (req, res) {
   // }
 });
 
+app.get("/:customListName", function (req, res) {
+  const customListName = req.params.customListName;
+  List.findOne({ name: customListName }, function (err, foundList) {
+    if (!err) {
+      if (!foundList) {
+        const list = new List({
+          name: customListName,
+          items: defaultItems
+        });
+        list.save();
+        res.redirect("/" + customListName);
+      }
+      else {
+        res.render("list", { listTitle: foundList.name.charAt(0).toUpperCase() + foundList.name.slice(1) + " List - " + date.getDate(), newListItems: foundList.items });
+      }
+    }
+  })
+});
 
 app.post("/delete", function (req, res) {
   const checkedItemId = req.body.checkbox;
-  Item.findByIdAndDelete(checkedItemId, function findAndDelete(err) {
+  Item.findByIdAndDelete(checkedItemId, function (err) {
     if (err) {
       console.log(err);
     }
     else {
       console.log("Successfully deleted!");
     }
+    res.redirect("/");
   })
 });
 
