@@ -44,7 +44,7 @@ app.get("/", function (req, res) {
     if (foundItems.length === 0) {
       Item.insertMany(defaultItems);
     }
-    res.render("list", { listTitle: date.getDate(), newListItems: foundItems });
+    res.render("list", { listTitle: "Today", newListItems: foundItems });
   })
 
 });
@@ -65,7 +65,8 @@ app.post("/", function (req, res) {
   // }
   // else{
   // items.push(item);
-  if(listName===date.getDate()){
+  // const dt = new Date(date.getDate())
+  if(listName==="Today"){
     item.save();
     res.redirect("/");
   }
