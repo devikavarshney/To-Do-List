@@ -52,11 +52,12 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
 
   const itemName = req.body.newItem;
+  const listName = req.body.list;
   const item = new Item({
     name: itemName
   });
 
-  item.save();
+  
 
   // if(req.body.list==="Work"){
   // workItems.push(item);
@@ -64,7 +65,18 @@ app.post("/", function (req, res) {
   // }
   // else{
   // items.push(item);
-  res.redirect("/");
+  if(listName===date.getDate()){
+    item.save();
+    res.redirect("/");
+  }
+  else{
+    List.findOne({name:listName}, function(err,foundList){
+      foundList.items.push(item);
+      foundList.save();
+    })
+    res.redirect("/" + listName);  
+  }
+  
   // }
 });
 
