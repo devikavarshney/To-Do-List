@@ -49,9 +49,11 @@ app.get("/", function (req, res) {
 
   Item.find({}, function (err, foundItems) {
     try {
-      if (foundItems.length() === 0) {
+      if (foundItems !== undefined) {
+      if (foundItems.length === 0) {
         Item.insertMany(defaultItems);
       }
+    }
       res.render("list", { listTitle: "Today", newListItems: foundItems });
     } catch (error) {
       console.log("The error is " + error);
