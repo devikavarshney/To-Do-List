@@ -13,7 +13,7 @@ app.use(express.static("public"));
 // const items = ["Buy food", "Cook food"];
 // const workItems =[];
 
-mongoose.connect("mongodb+srv://devika:Devika06%23@todolist.q7psyfr.mongodb.net/todolistDB?", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://devika:Devika06%23@todolist.q7psyfr.mongodb.net/todolistDB?", { useNewUrlParser: true, useUnifiedTopology: true });
 const itemsSchema = {
   name: String
 }
