@@ -12,7 +12,7 @@ app.use(express.static("public"));
 // const items = ["Buy food", "Cook food"];
 // const workItems =[];
 
-mongoose.connect("mongodb+srv://devika:Devika06%23@todolist.q7psyfr.mongodb.net/todolistDB?retryWrites=true&w=majority",{ useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://devika:Devika06%23@todolist.q7psyfr.mongodb.net/todolistDB?retryWrites=true&w=majority",{ useNewUrlParser: true });
 const itemsSchema = {
   name: String
 }
@@ -134,5 +134,5 @@ app.get("/work", function (req, res) {
 });
 
 app.listen(process.env.PORT || port, function () {
-  console.log(`Server started on port ${port}`);
+  console.log("Server started on port "+port);
 });
