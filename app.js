@@ -13,15 +13,15 @@ app.use(express.static("public"));
 // const items = ["Buy food", "Cook food"];
 // const workItems =[];
 
-mongoose.connect("mongodb+srv://devika:Devika06%23@todolist.q7psyfr.mongodb.net/todolistDB?retryWrites=true&w=majority",{ useNewUrlParser: true });
+mongoose.connect("mongodb+srv://devika:Devika06%23@todolist.q7psyfr.mongodb.net/todolistDB?", { useNewUrlParser: true });
 const itemsSchema = {
   name: String
 }
 mongoose.connection
- .once('open', () => console.log('Good to go!'))
- .on('error', (error) => {
- console.warn('Warning', error);
- });
+  .once('open', () => console.log('Good to go!'))
+  .on('error', (error) => {
+    console.warn('Warning', error);
+  });
 
 const Item = mongoose.model("Item", itemsSchema);
 
@@ -48,10 +48,14 @@ const List = mongoose.model("List", listSchema);
 app.get("/", function (req, res) {
 
   Item.find({}, function (err, foundItems) {
-    if (foundItems.length === 0) {
-      Item.insertMany(defaultItems);
+    try {
+      if (foundItems.length === 0) {
+        Item.insertMany(defaultItems);
+      }
+      res.render("list", { listTitle: "Today", newListItems: foundItems });
+    } catch (error) {
+      console.log("The error is " + error);
     }
-    res.render("list", { listTitle: "Today", newListItems: foundItems });
   })
 
 });
@@ -135,5 +139,5 @@ app.get("/work", function (req, res) {
 });
 
 app.listen(process.env.PORT || port, function () {
-  console.log("Server started on port "+port);
+  console.log("Server started on port " + port);
 });
