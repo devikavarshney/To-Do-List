@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const res = require("express/lib/response");
 const date = require(__dirname + "/date.js");
 const _ = require("lodash");
+const port = 3000;
 
 const app = express();
 app.set("view engine", "ejs");
